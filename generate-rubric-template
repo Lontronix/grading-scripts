@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# creates an assignment rubric from a template, opens the file in vim and then
+# copies the files contents to the clipboard when done.
+
+# Args: $1 - student id
+
+FILE_NAME="$1.md"
+
+cat > FILE_NAME << TEMPLATE
+Student: $1
+[...]
+TEMPLATE
+
+vim FILE_NAME 
+
+cat FILE_NAME | pbcopy

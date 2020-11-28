@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Clones student submissions of assignments into a directory in the current
+# working directory.
+
+# Args: $1 - assignment name
+#		$2 - course name
+#		$3 - file with student names
+
+
+function usage {
+	echo "Usage: assignment-clone assignment-name course-name student-file"
+}
+
+if [ $# -eq 0 ]; then
+	usage
+	exit 1
+fi
+
+echo "cloning assignments..."
+mkdir $1
+while IFS= read line
+do
+	if ! git clone -q "git@github.com:$2/$1-$line.git" "$PWD/$1/$line">/dev/null 2>&1; then
+		echo "unable to clone $line's repo"
+	fi
+done < $3
+echo "completed cloning assignments"
+
+
